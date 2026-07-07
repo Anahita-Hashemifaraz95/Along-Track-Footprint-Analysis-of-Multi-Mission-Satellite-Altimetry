@@ -1,6 +1,6 @@
 from reader import read_cycle
 from distance import compute_distance
-
+from outlier import detect_outliers_stepwise
 import pandas as pd
 
 
@@ -39,7 +39,7 @@ def run(data_path, tracks, missions):
                 df = read_cycle(cycle_file)
 
                 if df.empty:
-                    print(f"  Empty: {cycle_file.name}")
+                    # print(f"  Empty: {cycle_file.name}")
                     continue
 
                 # محاسبه فاصله بین نقاط متوالی
@@ -55,11 +55,11 @@ def run(data_path, tracks, missions):
                 # ذخیره خروجی این Cycle
                 mission_segments.append(segments)
 
-                print(
-                    f"  {cycle_file.name} -> "
-                    f"{len(df)} points, "
-                    f"{len(segments)} segments"
-                )
+                # print(
+                #     f"  {cycle_file.name} -> "
+                #     f"{len(df)} points, "
+                #     f"{len(segments)} segments"
+                # )
 
         # =====================================
         # تجمیع همه Segmentهای این Mission
@@ -79,3 +79,27 @@ def run(data_path, tracks, missions):
 
         # در مرحله بعد این DataFrame
         # به تابع تشخیص داده‌های پرت ارسال می‌شود.
+
+        # =====================================
+        # Stepwise 3-sigma outlier detection
+        # =====================================
+        
+        groups = detect_outliers_stepwise(mission_df)
+
+        print("\nOutlier summary")
+
+        print(f"Step 1    : {len(groups[0])}")
+
+        print(f"Step 2    : {len(groups[1])}")
+
+        print(f"Step 3    : {len(groups[2])}")
+
+        print(f"Step 4    : {len(groups[3])}")
+
+        print(f"Remaining : {len(groups[4])}")
+
+        # مراحل بعدی:
+
+        # statistics(groups)
+
+        # plots(groups)
