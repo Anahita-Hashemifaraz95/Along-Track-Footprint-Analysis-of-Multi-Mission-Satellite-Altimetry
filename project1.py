@@ -1,6 +1,5 @@
-from pathlib import Path
-
 from reader import read_cycle
+from distance import compute_distance
 
 
 def run(data_path, tracks, missions):
@@ -34,17 +33,45 @@ def run(data_path, tracks, missions):
 
             for cycle_file in cycle_files:
 
+                # خواندن فایل
                 df = read_cycle(cycle_file)
 
                 if df.empty:
                     print(f"  Empty: {cycle_file.name}")
                     continue
 
-                print(f"  {cycle_file.name}  ({len(df)} points)")
+                # محاسبه فاصله
+                segments = compute_distance(df)
 
-                # Next Step:
-                # segments = compute_distance(df)
-                # segments["track"] = track
-                # mission_data.append(segments)
+                if segments.empty:
+                    print(f"  Not enough points: {cycle_file.name}")
+                    continue
+
+                # افزودن شماره گذر
+                segments["track"] = track
+
+                # ذخیره نتایج
+                mission_data.append(segments)
+
+                print(
+                    f"  {cycle_file.name} -> "
+                    f"{len(df)} points, "
+                    f"{len(segments)} segments"
+                )
 
         print(f"\nMission {mission} completed.")
+
+        # -----------------------------
+        # مرحله بعد
+        # -----------------------------
+        #
+        # mission_df = pd.concat(
+        #     mission_data,
+        #     ignore_index=True
+        # )
+        #
+        # detect_outliers(mission_df)
+        #
+        # statistics(mission_df)
+        #
+        # plots(mission_df)
