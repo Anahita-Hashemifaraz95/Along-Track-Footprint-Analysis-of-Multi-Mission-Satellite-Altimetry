@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from reader import read_cycle
+
 
 def run(data_path, tracks, missions):
 
@@ -9,9 +11,11 @@ def run(data_path, tracks, missions):
         print(f"Mission: {mission}")
         print("==========================")
 
+        mission_data = []
+
         for track in tracks:
 
-            pass_folder = data_path / f"Pass-{track:03d}"
+            pass_folder = data_path / f"Pass_{track:03d}"
             mission_folder = pass_folder / mission
 
             if not mission_folder.exists():
@@ -29,4 +33,18 @@ def run(data_path, tracks, missions):
                 continue
 
             for cycle_file in cycle_files:
-                print(f"  {cycle_file.name}")
+
+                df = read_cycle(cycle_file)
+
+                if df.empty:
+                    print(f"  Empty: {cycle_file.name}")
+                    continue
+
+                print(f"  {cycle_file.name}  ({len(df)} points)")
+
+                # Next Step:
+                # segments = compute_distance(df)
+                # segments["track"] = track
+                # mission_data.append(segments)
+
+        print(f"\nMission {mission} completed.")
