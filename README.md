@@ -1,4 +1,4 @@
-Project 1 – Along-Track Footprint Analysis of Multi-Mission Satellite Altimetry
+Along-Track Footprint Analysis of Multi-Mission Satellite Altimetry
 
 Overview
 
