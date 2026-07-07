@@ -4,11 +4,18 @@ from project1 import run
 
 
 DATA_PATH = Path(r"C:\Users\surface\Desktop\project1\data")
-
+OUTPUT_PATH = Path(r"C:\Users\surface\Desktop\project1")
 
 TRACKS = [
     16,
+    31,
+    57,
+    92,
+    107,
     133,
+    168,
+    209,
+    244,
 ]
 
 
@@ -22,6 +29,7 @@ MISSIONS = [
 
 run(
     data_path=DATA_PATH,
+    output_path=OUTPUT_PATH,
     tracks=TRACKS,
     missions=MISSIONS,
 )

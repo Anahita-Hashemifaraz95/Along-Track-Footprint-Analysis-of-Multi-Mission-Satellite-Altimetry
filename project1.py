@@ -1,10 +1,15 @@
-from reader import read_cycle
-from distance import compute_distance
-from outlier import detect_outliers_stepwise
 import pandas as pd
 
+from reader import read_cycle
+from distance import compute_distance
+from outlier import (
+    detect_outliers_stepwise,
+    distance_statistics,
+    save_statistics,
+)
 
-def run(data_path, tracks, missions):
+
+def run(data_path, output_path,tracks, missions):
 
     for mission in missions:
 
@@ -97,9 +102,28 @@ def run(data_path, tracks, missions):
         print(f"Step 4    : {len(groups[3])}")
 
         print(f"Remaining : {len(groups[4])}")
+    
+        # -----------------------------
+        # Distance statistics
+        # -----------------------------
 
-        # مراحل بعدی:
+        stats = distance_statistics(groups)
 
-        # statistics(groups)
+        print(stats)
 
-        # plots(groups)
+        # -----------------------------
+        # Save results
+        # ----------------------------
+
+        save_statistics(
+
+            stats=stats,
+
+            mission=mission,
+
+            output_path=output_path,
+
+        )
+
+        print("Statistics saved.")
+
