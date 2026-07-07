@@ -1,6 +1,8 @@
 from reader import read_cycle
 from distance import compute_distance
 
+import pandas as pd
+
 
 def run(data_path, tracks, missions):
 
@@ -10,11 +12,11 @@ def run(data_path, tracks, missions):
         print(f"Mission: {mission}")
         print("==========================")
 
-        mission_data = []
+        mission_segments = []
 
         for track in tracks:
 
-            pass_folder = data_path / f"Pass_{track:03d}"
+            pass_folder = data_path / f"Pass-{track:03d}"
             mission_folder = pass_folder / mission
 
             if not mission_folder.exists():
@@ -40,7 +42,7 @@ def run(data_path, tracks, missions):
                     print(f"  Empty: {cycle_file.name}")
                     continue
 
-                # محاسبه فاصله
+                # محاسبه فاصله بین نقاط متوالی
                 segments = compute_distance(df)
 
                 if segments.empty:
@@ -50,8 +52,8 @@ def run(data_path, tracks, missions):
                 # افزودن شماره گذر
                 segments["track"] = track
 
-                # ذخیره نتایج
-                mission_data.append(segments)
+                # ذخیره خروجی این Cycle
+                mission_segments.append(segments)
 
                 print(
                     f"  {cycle_file.name} -> "
@@ -59,19 +61,21 @@ def run(data_path, tracks, missions):
                     f"{len(segments)} segments"
                 )
 
-        print(f"\nMission {mission} completed.")
+        # =====================================
+        # تجمیع همه Segmentهای این Mission
+        # =====================================
 
-        # -----------------------------
-        # مرحله بعد
-        # -----------------------------
-        #
-        # mission_df = pd.concat(
-        #     mission_data,
-        #     ignore_index=True
-        # )
-        #
-        # detect_outliers(mission_df)
-        #
-        # statistics(mission_df)
-        #
-        # plots(mission_df)
+        if not mission_segments:
+            print(f"\nNo valid data for {mission}")
+            continue
+
+        mission_df = pd.concat(
+            mission_segments,
+            ignore_index=True,
+        )
+
+        print(f"\nMission {mission} completed.")
+        print(f"Total segments: {len(mission_df)}")
+
+        # در مرحله بعد این DataFrame
+        # به تابع تشخیص داده‌های پرت ارسال می‌شود.
