@@ -24,14 +24,14 @@ def compute_distance(df):
     lon = df["Longitude"].to_numpy()
     time = df["time"].to_numpy()
 
-    # اختلاف مختصات
+    # Coordinate difference
     dlat = np.radians(lat[1:] - lat[:-1])
     dlon = np.radians(lon[1:] - lon[:-1])
 
     lat1 = np.radians(lat[:-1])
     lat2 = np.radians(lat[1:])
 
-    # فرمول Haversine
+    # Haversine Formula
     a = (
         np.sin(dlat / 2) ** 2
         + np.cos(lat1)
