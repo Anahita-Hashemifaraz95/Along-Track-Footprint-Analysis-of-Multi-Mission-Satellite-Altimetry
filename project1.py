@@ -40,24 +40,24 @@ def run(data_path, output_path,tracks, missions):
 
             for cycle_file in cycle_files:
 
-                # خواندن فایل
+                # Read the input file
                 df = read_cycle(cycle_file)
 
                 if df.empty:
                     # print(f"  Empty: {cycle_file.name}")
                     continue
 
-                # محاسبه فاصله بین نقاط متوالی
+                # Compute the distance between consecutive points
                 segments = compute_distance(df)
 
                 if segments.empty:
                     print(f"  Not enough points: {cycle_file.name}")
                     continue
 
-                # افزودن شماره گذر
+                # Add the pass number
                 segments["track"] = track
 
-                # ذخیره خروجی این Cycle
+                # Save the output for the current cycle
                 mission_segments.append(segments)
 
                 # print(
@@ -67,7 +67,7 @@ def run(data_path, output_path,tracks, missions):
                 # )
 
         # =====================================
-        # تجمیع همه Segmentهای این Mission
+        # Combine all missions for this segment
         # =====================================
 
         if not mission_segments:
@@ -82,8 +82,7 @@ def run(data_path, output_path,tracks, missions):
         print(f"\nMission {mission} completed.")
         print(f"Total segments: {len(mission_df)}")
 
-        # در مرحله بعد این DataFrame
-        # به تابع تشخیص داده‌های پرت ارسال می‌شود.
+        # In the next step, this DataFrame is passed to the outlier detection function
 
         # =====================================
         # Stepwise 3-sigma outlier detection
