@@ -3,6 +3,7 @@ Along-Track Footprint Analysis of Multi-Mission Satellite Altimetry
 A Python-based research software module for characterizing spatial sampling patterns of multi-mission satellite altimetry observations and evaluating effective along-track resolution over ocean and inland water surfaces.
 
 Overview
+
 Satellite altimetry observations are collected along repeated satellite ground tracks with mission-dependent spatial sampling characteristics. Understanding the effective observation spacing is essential for reliable construction of along-track water-level time series, multi-mission integration, and geophysical interpretation of satellite-derived observations.
 
 This project provides an automated workflow for analyzing the spatial sampling characteristics (satellite footprint) of Level-2 along-track altimetry observations from multiple satellite missions. The software calculates observation spacing along satellite tracks, identifies irregular sampling caused by missing records or data gaps, and estimates the effective spatial resolution of each mission within a selected study region.
