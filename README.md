@@ -1,12 +1,16 @@
 Along-Track Footprint Analysis of Multi-Mission Satellite Altimetry
 
+A Python-based research software module for characterizing spatial sampling patterns of multi-mission satellite altimetry observations and evaluating effective along-track resolution over ocean and inland water surfaces.
+
 Overview
+Satellite altimetry observations are collected along repeated satellite ground tracks with mission-dependent spatial sampling characteristics. Understanding the effective observation spacing is essential for reliable construction of along-track water-level time series, multi-mission integration, and geophysical interpretation of satellite-derived observations.
 
-This project is the first module of a Python package developed for processing multi-mission satellite altimetry data.
+This project provides an automated workflow for analyzing the spatial sampling characteristics (satellite footprint) of Level-2 along-track altimetry observations from multiple satellite missions. The software calculates observation spacing along satellite tracks, identifies irregular sampling caused by missing records or data gaps, and estimates the effective spatial resolution of each mission within a selected study region.
 
-The objective of this module is to analyze the spatial sampling characteristics (satellite footprint) of Level-2 along-track altimetry observations over a selected study area, such as the Caspian Sea. The analysis provides quantitative information about the spacing between consecutive observations along each satellite ground track and evaluates the effective sampling resolution of each mission.
+The framework has been designed as a preprocessing module for larger satellite altimetry processing workflows, including water-level time-series generation, multi-mission harmonization, tidal analysis, and climate-related variability studies. 
 
-⸻
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 Project Objective
 
